@@ -7,6 +7,7 @@ class ExpenseItem extends StatelessWidget {
   final Expense expense;
   @override
   Widget build(BuildContext context) {
+    //* show the each expense item in a card widget for better UI
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(

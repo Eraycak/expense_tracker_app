@@ -30,7 +30,18 @@ class _ExpensesState extends State<Expenses> {
   void _openAddExpenseModal() {
     showModalBottomSheet(
       context: context,
-      builder: (contextBuilder) => const NewExpense(),
+      isScrollControlled: true, //* This is to make the modal full screen
+      builder: (contextBuilder) => NewExpense(
+        onAddNewExpense: _addNewExpense,
+      ),
+    );
+  }
+
+  void _addNewExpense(Expense newExpense) {
+    setState(
+      () {
+        _registeredExpenses.add(newExpense);
+      },
     );
   }
 

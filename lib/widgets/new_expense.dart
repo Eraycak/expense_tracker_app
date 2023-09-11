@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/models/expense.dart';
+import 'package:expense_tracker_app/enums/category.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -14,6 +15,16 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category? _selectedCategory;
+  void _setSelectedCategory(Category? category) {
+    if (category == null) {
+      return;
+    }
+    setState(() {
+      _selectedCategory = category;
+    });
+  }
+
   void _presentDatePicker() async {
     final currentDate = DateTime.now();
     final firstDate =
@@ -83,8 +94,24 @@ class _NewExpenseState extends State<NewExpense> {
               ),
             ],
           ),
+          const SizedBox(height: 16),
           Row(
             children: [
+              DropdownButton(
+                value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(
+                          category.name.toUpperCase(),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) => _setSelectedCategory(value),
+              ),
+              const Spacer(),
               TextButton(
                 onPressed: () => _closeModal(context),
                 child: const Text('Cancel'),

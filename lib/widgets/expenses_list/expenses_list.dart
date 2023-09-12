@@ -17,6 +17,32 @@ class ExpensesList extends StatelessWidget {
       itemCount: expensesList.length,
       itemBuilder: (context, index) => Dismissible(
         key: ValueKey(expensesList[index]),
+        background: Container(
+          //*This will show icon at the left end when swiping from left to right
+          color: Theme.of(context).colorScheme.error.withOpacity(0.75),
+          margin: Theme.of(context).cardTheme.margin,
+          child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 80,
+            ),
+          ),
+        ),
+        secondaryBackground: Container(
+          //* This will show icon at the right end when swiping from right to left
+          color: Theme.of(context).colorScheme.error.withOpacity(0.75),
+          margin: Theme.of(context).cardTheme.margin,
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 80,
+            ),
+          ),
+        ),
         onDismissed: (direction) => onDismissExpense(expensesList[
             index]), //* this will remove the item from the list by swipe action
         child: ExpenseItem(

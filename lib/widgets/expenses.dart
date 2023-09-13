@@ -30,6 +30,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpenseModal() {
     showModalBottomSheet(
+      useSafeArea: true,
       context: context,
       isScrollControlled: true, //* This is to make the modal full screen
       builder: (contextBuilder) => NewExpense(

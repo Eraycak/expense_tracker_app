@@ -1,5 +1,6 @@
 import 'package:expense_tracker_app/widgets/expenses.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 final ColorScheme colorSchemeLight = ColorScheme.fromSeed(
   seedColor: Colors.green,
@@ -12,6 +13,21 @@ final ColorScheme colorSchemeDark = ColorScheme.fromSeed(
 );
 
 void main() {
+  //? Alternative way to be sure that the app is always in portrait mode
+  /*WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then(
+    (func) {
+      runApp(
+        MaterialApp(
+          darkTheme: _setThemeDark(),
+          theme: _setTheme(),
+          home: const Expenses(),
+        ),
+      );
+    },
+  );*/
   runApp(
     MaterialApp(
       darkTheme: _setThemeDark(),

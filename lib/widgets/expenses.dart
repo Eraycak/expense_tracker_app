@@ -74,6 +74,9 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final bool isLandscape = width > height;
     Widget mainContent = const Center(
       child: Text('No expenses added yet!'),
     );
@@ -95,16 +98,29 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(
-            expenses: _registeredExpenses,
-          ),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+      body: !isLandscape
+          ? Column(
+              children: [
+                Chart(
+                  expenses: _registeredExpenses,
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Chart(
+                    expenses: _registeredExpenses,
+                  ),
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
     );
   }
 }

@@ -99,7 +99,7 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: !isLandscape
+      body: !isLandscape //* This is to make the layout responsive
           ? Column(
               children: [
                 Chart(

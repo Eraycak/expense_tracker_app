@@ -138,7 +138,7 @@ class _NewExpenseState extends State<NewExpense> {
     if (isLandscape) {
       return _buildLandscapeLayout(context);
     } else {
-      return _buildPortraitLayout();
+      return _buildPortraitLayout(context);
     }
   }
 
@@ -211,7 +211,7 @@ class _NewExpenseState extends State<NewExpense> {
     ];
   }
 
-  List<Widget> _buildPortraitLayout() {
+  List<Widget> _buildPortraitLayout(BuildContext context) {
     return [
       TextField(
         controller: _titleController,

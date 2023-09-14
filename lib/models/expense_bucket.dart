@@ -22,6 +22,7 @@ class ExpenseBucket {
       (previousValue, expense) => previousValue + expense.amount,
     );
 
+    //? this is the same as the above code
     /*double sum = 0;
     for (final expense in expenses) {
       sum += expense.amount;

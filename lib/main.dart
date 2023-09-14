@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 final ColorScheme colorSchemeLight = ColorScheme.fromSeed(
-  seedColor: Colors.green,
+  seedColor: Colors.teal,
   brightness: Brightness.light,
 );
 
 final ColorScheme colorSchemeDark = ColorScheme.fromSeed(
-  seedColor: Colors.green,
+  seedColor: Colors.teal,
   brightness: Brightness.dark,
 );
 

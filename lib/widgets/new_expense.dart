@@ -135,136 +135,148 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   List<Widget> setLayout(bool isLandscape, BuildContext context) {
+    if (isLandscape) {
+      return _buildLandscapeLayout(context);
+    } else {
+      return _buildPortraitLayout();
+    }
+  }
+
+  List<Widget> _buildLandscapeLayout(BuildContext context) {
     return [
-      if (isLandscape)
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _titleController,
-                maxLength: 50,
-                decoration: const InputDecoration(
-                  label: Text('Title'),
-                ),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _titleController,
+              maxLength: 50,
+              decoration: const InputDecoration(
+                label: Text('Title'),
               ),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: TextField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  prefixText: '\$ ',
-                  label: Text('Amount'),
-                ),
-              ),
-            ),
-          ],
-        )
-      else
-        TextField(
-          controller: _titleController,
-          maxLength: 50,
-          decoration: const InputDecoration(
-            label: Text('Title'),
           ),
-        ),
-      const SizedBox(height: 16),
-      if (isLandscape)
-        Row(
-          children: [
-            DropdownButton(
-              value: _selectedCategory,
-              items: Category.values
-                  .map(
-                    (category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(
-                        category.name.toUpperCase(),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) => _setSelectedCategory(value),
+          const SizedBox(width: 24),
+          Expanded(
+            child: TextField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                prefixText: '\$ ',
+                label: Text('Amount'),
+              ),
             ),
-            const SizedBox(width: 16),
-          ],
-        )
-      else
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  prefixText: '\$ ',
-                  label: Text('Amount'),
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          DropdownButton(
+            value: _selectedCategory,
+            items: _buildCategoryDropdownItems(),
+            onChanged: (value) => _setSelectedCategory(value),
+          ),
+          const SizedBox(width: 24),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(_selectedDate == null
+                    ? 'No date selected'
+                    : 'Picked Date: ${dateFormatter.format(_selectedDate!)}'),
+                IconButton(
+                  onPressed: _presentDatePicker,
+                  icon: const Icon(Icons.calendar_month),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(_selectedDate == null
-                      ? 'No date selected'
-                      : 'Picked Date: ${dateFormatter.format(_selectedDate!)}'),
-                  IconButton(
-                    onPressed: _presentDatePicker,
-                    icon: const Icon(Icons.calendar_month),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      const SizedBox(height: 16),
-      if (isLandscape)
-        Row(
-          children: [
-            const Spacer(),
-            TextButton(
-              onPressed: () => _closeModal(context),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: _submitExpenseData,
-              child: const Text('Save Expense'),
-            ),
-          ],
-        )
-      else
-        Row(
-          children: [
-            DropdownButton(
-              value: _selectedCategory,
-              items: Category.values
-                  .map(
-                    (category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(
-                        category.name.toUpperCase(),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) => _setSelectedCategory(value),
-            ),
-            const Spacer(),
-            TextButton(
-              onPressed: () => _closeModal(context),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: _submitExpenseData,
-              child: const Text('Save Expense'),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 24),
+      Row(
+        children: [
+          const Spacer(),
+          TextButton(
+            onPressed: () => _closeModal(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: _submitExpenseData,
+            child: const Text('Save Expense'),
+          ),
+        ],
+      ),
     ];
+  }
+
+  List<Widget> _buildPortraitLayout() {
+    return [
+      TextField(
+        controller: _titleController,
+        maxLength: 50,
+        decoration: const InputDecoration(
+          label: Text('Title'),
+        ),
+      ),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                prefixText: '\$ ',
+                label: Text('Amount'),
+              ),
+            ),
+          ),
+          const SizedBox(width: 24),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(_selectedDate == null
+                    ? 'No date selected'
+                    : 'Picked Date: ${dateFormatter.format(_selectedDate!)}'),
+                IconButton(
+                  onPressed: _presentDatePicker,
+                  icon: const Icon(Icons.calendar_month),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          DropdownButton(
+            value: _selectedCategory,
+            items: _buildCategoryDropdownItems(),
+            onChanged: (value) => _setSelectedCategory(value),
+          ),
+          const Spacer(),
+          TextButton(
+            onPressed: () => _closeModal(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: _submitExpenseData,
+            child: const Text('Save Expense'),
+          ),
+        ],
+      ),
+    ];
+  }
+
+  List<DropdownMenuItem<Category>> _buildCategoryDropdownItems() {
+    return Category.values.map((category) {
+      return DropdownMenuItem(
+        value: category,
+        child: Text(category.name.toUpperCase()),
+      );
+    }).toList();
   }
 }
